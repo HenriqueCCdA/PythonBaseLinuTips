@@ -24,11 +24,14 @@ n1: 5
 n2: 4
 9
 
+Os resultados serão salvos em 'ínfixcalc.log'
 """
 
 __version__ = '0.1.0'
 
+import os
 import sys
+from datetime import datetime
 
 arguments = sys.argv[1:]
 
@@ -57,7 +60,6 @@ for num in nums:
 	if not num.replace('.', '').isdigit():
 		print(f'Número inválido {num}')
 		sys.exit(1)
-		
 	if '.' in num:
 		num = float(num)
 	else:
@@ -76,17 +78,14 @@ elif operation == 'mul':
 elif operation == 'div':
 	result = n1 / n2
 
+path = os.curdir
+filepath = os.path.join(path, 'infixcalc.log')
+timestamp = datetime.now().isoformat()
+user = os.getenv('USER', 'anonymous')
+
+
+with open(filepath, 'a') as file_:
+	file_.write(f'{timestamp} - {user} - {operation},{n1},{n2} = {result}\n')
+
 print(f'O resultado é {result}')
 	
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,4 @@
+Bruno,bruno@email.com
+Maria,maria@email.com
+Joao,joao@email.com
+Antônio,antonio@email.com
