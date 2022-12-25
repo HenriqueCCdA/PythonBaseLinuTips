@@ -40,4 +40,4 @@ except ZeroDivisionError as e:
     log.error('Deu erro %s', str(e))
     #stdout
     #stderr
-    
+   
