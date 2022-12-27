@@ -85,14 +85,4 @@ print(f"Olá {nome_cliente}, você escolheu o quarto {nome_quarto} o valor total
 if input("Confirma? [digite y]").strip().lower() in ("y", "yes", "sim", "s"):
     with open(RESERVAS_FILE, "a") as reserva_file:
         reserva_file.write(f"{nome_cliente},{num_quarto},{dias}\n")
-        
-
-
-
-
-
-
-
-
-
-
+     
