@@ -16,25 +16,33 @@ import logging
 log = logging.Logger('alerta')
 
 
-info = {'temperatura': None, 'umidade': None}
-keys = info.keys()
+# TODO: Mover para módulo de utilidades
+
+def is_completely_filled(dict_of_inputs):
+    """Retuns a boolan telling if a dict is completly filled."""
+    info_size = len(dict_of_inputs)
+    filled_size = len([value for value in dict_of_inputs.values() if value is not None])
+    return info_size == filled_size
 
 
-while True:
-
-    info_size = len(info.values())
-    filled_size = len([value for value in info.values() if value is not None])
-    if info_size == filled_size:
-        break
-
-    for key in keys:
+def read_inputs_for_dict(dict_of_info):
+    """Reads information for a dict from user inout."""
+    for key in dict_of_info:
         if info[key] is not None:
             continue
         try:
-            info[key] = float(input(f'Qual a {key}? ').strip())
+            dict_of_info[key] = float(input(f'Qual a {key}? ').strip())
         except ValueError:
             log.error(f'{key.capitalize()} inválida')
             break
+
+
+# PROGRAMA PRINCIPAL
+
+info = {'temperatura': None, 'umidade': None}
+
+while not is_completely_filled(info):
+    read_inputs_for_dict(info)
 
 temp, umidade = info.values()
 

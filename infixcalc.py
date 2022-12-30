@@ -35,6 +35,14 @@ from datetime import datetime
 
 arguments = sys.argv[1:]
 
+valid_operations = {	
+	"sum": lambda a, b: a + b,
+	"sub": lambda a, b: a - b,
+	"mul": lambda a, b: a * b,
+	"div": lambda a, b: a / b,
+}
+
+
 if not  arguments:
 	operation = input('Operação:')
 	n1 = input('n1:')
@@ -48,7 +56,6 @@ elif len(arguments) != 3:
 
 operation, *nums = arguments
 
-valid_operations = ('sum', 'sub', 'mul', 'div')
 if operation not in valid_operations:
 	print('Operação inválida')
 	print(valid_operations)
@@ -72,15 +79,7 @@ except ValueError as e:
     print(str(e))
     sys.exit(1)
 
-# TODO: User dict de funcoes
-if operation == 'sum':
-	result = n1 + n2
-elif operation == 'sub':
-	result = n1 - n2
-elif operation == 'mul':
-	result = n1 * n2
-elif operation == 'div':
-	result = n1 / n2
+result = valid_operations[operation](n1, n2)
 
 path = os.curdir
 filepath = os.path.join(path, 'infixcalc.log')

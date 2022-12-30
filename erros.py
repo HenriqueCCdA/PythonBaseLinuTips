@@ -1,36 +1,47 @@
 #!/usr/bin/env python3
 import os
 import sys
+import time
+import logging
 
-# LBYL - Look Before You Leap
+log = logging.Logger("errors")
 
-# if os.path.exists('names1.txt'):
-	# names = open('names1.txt').readlines()
-# else:
-	# print('[Error] File names.txt not exists')
-	# sys.exit(1)
+# def try_to_open_a_file(filepath, retry=1):
+	# for attempt in range(1, retry + 1):
+		# try:
+			# return open(filepath).readlines()
+		# except FileNotFoundError as e:
+			# log.error("ERRO: %s", e)
+			# time.sleep(1)
+		# else:
+			# print('Sucesso!!!')
+		# finally:
+			# print('Execute isso sempre!')
+	# return []
+	# 
+# 
+# for line in try_to_open_a_file("names1txt", retry=3):
+	# print(line)
 
-# if len(names) >= 3:
-    # print(names[2])
-# else:
-    # print('[Error]: Missing name in the list')
-    # sys.exit(1)
 
-# EAFP - Easy to Ask Forgiveness than permission
+def try_to_open_a_file(filepath, retry=1):
 
-try:
-	names = open('names.txt').readlines()
-except FileNotFoundError as e:
-	print(f'[Error] {str(e)}.')
-	sys.exit(e.errno)
-	# TODO: User retry
-else:
-	print('Sucesso!!!')
-finally:
-	print('Execute isso sempre!')
-	
-try:
-    print(names[0])
-except:
-	print('[Error]: Missing name in the list')
-	sys.exit(1)
+	if retry > 999:
+		raise ValueError("Retry cannot be above 999")
+
+	try:
+		return open(filepath).readlines()
+	except FileNotFoundError as e:
+		log.error("ERRO: %s", e)
+		time.sleep(2)
+		if retry > 1:
+			return try_to_open_a_file(filepath, retry=retry-1)
+	else:
+		print('Sucesso!!!')
+	finally:
+		print('Execute isso sempre!')
+
+	return []
+
+for line in try_to_open_a_file("names1.txt", retry=500):
+	print(line)
