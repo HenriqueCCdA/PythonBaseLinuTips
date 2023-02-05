@@ -46,11 +46,15 @@ con = sqlite3.connect("sql_exemple.db")
 con.execute("PRAGMA foreign_keys = ON;")
 
 instruction = """\
-SELECT id, name, emial, dept, role
+SELECT id, 500
 FROM person
 WHERE dept = 'Sales';
 """
 
 cur = con.cursor()
 result = cur.execute(instruction)
-print(*result)
+for row in result:
+    instruction = "INSERT INTO balance (person, value) VALUES (?, ?)"
+    con.execute(instruction, row)
+
+con.commit()
